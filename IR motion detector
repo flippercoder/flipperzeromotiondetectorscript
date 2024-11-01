@@ -1,0 +1,32 @@
+#include <flipper.h>
+
+void setup() {
+    // Initialize built-in LED as an output
+    gpio_mode(FLIPPER_LED, GPIO_OUTPUT);
+    // Initialize built-in IR sensor as an input
+    gpio_mode(FLIPPER_IR_SENSOR, GPIO_INPUT);
+}
+
+void loop() {
+    // Read the value from the built-in IR sensor
+    int motionDetected = gpio_read(FLIPPER_IR_SENSOR);
+    
+    // If motion is detected, turn on the built-in LED
+    if (motionDetected) {
+        gpio_write(FLIPPER_LED, HIGH);
+    } else {
+        gpio_write(FLIPPER_LED, LOW);
+    }
+    
+    // Small delay to avoid rapid toggling
+    delay(100);
+}
+
+int main(void) {
+    setup();
+    while (1) {
+        loop();
+    }
+    
+    return 0;
+}
